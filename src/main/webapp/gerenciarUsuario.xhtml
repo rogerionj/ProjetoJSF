@@ -4,12 +4,45 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="template/templatePrincipal.xhtml">
 	
 	<ui:define name="content">
 		 Gerenciar Usuário
+		 
+	<h:form id="formUsuario">
+		Nome: <p:inputText value="#{gerenciarUsuario.usuario.nome}"/><br/>
+		Login: <p:inputText value="#{gerenciarUsuario.usuario.login}"/><br/>
+		Senha: <p:password feedback="true" value="#{gerenciarUsuario.usuario.senha}"/><br/>
+		Email: <p:inputText value="#{gerenciarUsuario.usuario.email}"/><br/>	
+		<p:commandButton value="Salvar" action="#{gerenciarUsuario.salvar}" update="formUsuario"/><br/>
+		<br/><br/>
+		<p:dataTable id="usuariosTable" value="#{gerenciarUsuario.usuarios}" var="usu">
+			<p:column headerText="Id">
+				<h:outputText value="#{usu.id}"/>
+			</p:column>
+			<p:column headerText="Nome">
+				<h:outputText value="#{usu.nome}"/>
+			</p:column>
+			<p:column headerText="Login">
+				<h:outputText value="#{usu.login}"/>
+			</p:column>
+			<p:column headerText="Email">
+				<h:outputText value="#{usu.email}"/>
+			</p:column>
+			<p:column headerText="Opções">
+				<p:commandLink action="#{gerenciarUsuario.excluir(usu)}" update="formUsuario">
+					Excluir
+				</p:commandLink>
+				<p:commandLink action="#{gerenciarUsuario.carregarForm(usu)}" update="formUsuario">
+					Alterar
+				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+	</h:form>	 
+		 
 	</ui:define>
 
 </ui:composition>
